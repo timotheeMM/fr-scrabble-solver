@@ -15,3 +15,11 @@ board = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ]
+
+def return_best_board(actual, letters):
+    return actual
+
+best_board = return_best_board(board, '')
+
+for i in best_board:
+    print(i)
