@@ -29,6 +29,32 @@ def extend_existing_word(actual: list) -> list:
             else:
                 j += 1
 
+    for i in range(len(board)):
+        j = 0
+        while j < len(board[i]):
+
+            if board[j][i] != 0 and j != len(board) - 1 and board[j + 1][i] != 0:
+                word = board[j][i]
+                incr = 1
+                while True:
+                    if board[j + incr][i] != 0:
+                        if j + incr == len(board) - 1:
+                            word += board[j + incr][i]
+                            j = len(board) - 1
+                            break
+                        else:
+                            word += board[j + incr][i]
+                            incr += 1
+
+                    else:
+                        j += incr
+                        break
+
+                possibilities.append([word, ((j, i), (j + incr, i))])
+
+            else:
+                j += 1
+
     print(possibilities)
 
 
