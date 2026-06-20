@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solveur de Scrabble FR</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>Solveur de Scrabble <span>FR</span></h1>
+      <p class="subtitle">Place les pions du plateau, entre tes lettres, trouve le meilleur coup.</p>
+    </header>
+
+    <main class="layout">
+      <section class="board-panel">
+        <div id="board" class="board" style="--size: {{ size }};">
+          {% for r in range(size) %}
+            {% for c in range(size) %}
+              {% set code = premiums[r][c] %}
+              <div class="cell{% if code %} premium-{{ code }}{% endif %}{% if r == center and c == center %} center{% endif %}"
+                   data-row="{{ r }}" data-col="{{ c }}">
+                {% if r == center and c == center %}<span class="star">&#9733;</span>{% endif %}
+              </div>
+            {% endfor %}
+          {% endfor %}
+        </div>
+        <div class="board-actions">
+          <button id="clearBoard" class="btn btn-ghost">Effacer le plateau</button>
+        </div>
+      </section>
+
+      <aside class="side-panel">
+        <div class="card">
+          <h2>Poser un pion</h2>
+          <div class="placer">
+            <input id="letterInput" maxlength="1" placeholder="?" autocomplete="off">
+            <label class="blank-toggle">
+              <input type="checkbox" id="blankToggle">
+              Lettre blanche (joker)
+            </label>
+          </div>
+          <p class="hint">Tape une lettre puis clique une case du plateau pour la poser.<br>Re-clique une case occupée pour l'effacer.</p>
+        </div>
+
+        <div class="card">
+          <h2>Ton jeu</h2>
+          <input id="rackInput" maxlength="7" placeholder="ex : ?ortie" autocomplete="off">
+          <div id="rackPreview" class="rack-preview"></div>
+          <button id="solveBtn" class="btn btn-primary">Trouver le meilleur coup</button>
+          <p id="errorMsg" class="error"></p>
+        </div>
+
+        <div class="card" id="resultsCard" hidden>
+          <h2>Meilleurs coups</h2>
+          <ul id="movesList" class="moves-list"></ul>
+          <button id="applyBtn" class="btn btn-secondary" hidden>Appliquer ce coup</button>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
